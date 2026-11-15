@@ -1,0 +1,21 @@
+const fs = require('fs'); const assert = require('assert');
+let handler; global.window = { P2P_CONFIG: { API_BASE: 'http://x/api/v1' } };
+global.document = { addEventListener: (e, f) => { if (e === 'DOMContentLoaded') handler = f; }, body: { dataset: {} } };
+global.sessionStorage = { getItem() { return null; }, setItem() {}, removeItem() {} };
+eval(fs.readFileSync(require('path').join(__dirname, '..', 'js', 'p2p.js'), 'utf8')); handler();
+const { fmtAmount, cmpDecimal, V, esc } = window.P2P;
+assert.equal(fmtAmount('1500.00000000'), '1,500.00');
+assert.equal(fmtAmount('0.12345678'), '0.12345678');
+assert.equal(fmtAmount('1234567.5'), '1,234,567.50');
+assert.equal(fmtAmount('99999999999999.99999999'), '99,999,999,999,999.99999999'); // no float rounding
+assert.equal(fmtAmount('abc'), '—');
+assert.equal(cmpDecimal('100.00000000', '100'), 0);
+assert.equal(cmpDecimal('99.99', '100'), -1);
+assert.equal(cmpDecimal('100.01', '100'), 1);
+assert.equal(cmpDecimal('0.1', '0.09999999'), 1);
+assert.equal(cmpDecimal('1000', '999'), 1);
+assert.ok(V.amount('10.5') && V.amount('0.00000001') && !V.amount('0') && !V.amount('0.00') && !V.amount('1.123456789') && !V.amount('-5') && !V.amount('1e5'));
+assert.ok(V.account('1234567890') && !V.account('123') && !V.account('12a45678'));
+assert.equal(V.password('Tr1cky#Horse9Battery'), ''); assert.ok(V.password('short'));
+assert.equal(esc('<img src=x onerror=alert(1)>'), '&lt;img src=x onerror=alert(1)&gt;');
+console.log('frontend pure-logic tests passed');
