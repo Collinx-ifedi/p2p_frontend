@@ -1,0 +1,94 @@
+/* ================================================================
+   P2P WALLET — p2p.css
+   ADDITIVE ONLY. client.css (the RTR espresso/caramel design system) is
+   reused unchanged; this file only adds the few components the P2P
+   screens need that client.css does not provide (tables, wallet cards,
+   tabs, stat tiles, pager, simulation banner). Everything uses the
+   existing design tokens (--caramel, --glass, --border-mid, ...).
+   ================================================================ */
+
+.skip-link { position: absolute; left: -9999px; top: 0; background: var(--caramel); color: var(--espresso); padding: .6rem 1rem; z-index: 9999; }
+.skip-link:focus { left: .5rem; top: .5rem; }
+.btn-full { width: 100%; justify-content: center; }
+.toast .ti { display: inline-flex; width: 1.1rem; height: 1.1rem; margin-right: .5rem; vertical-align: middle; }
+.toast .ti svg { width: 100%; height: 100%; }
+.alert > svg { flex: 0 0 1.2rem; width: 1.2rem; height: 1.2rem; }
+.alert { display: flex; gap: .7rem; align-items: flex-start; margin: .8rem 0; }
+
+/* Brand mark + nav (uses .site-header/.header-inner/.brand from client.css) */
+.brand-mark { display: inline-block; padding: .1rem .5rem; margin-right: .35rem; border: 1px solid var(--caramel); border-radius: .35rem; color: var(--caramel); font-weight: 700; }
+.p2p-nav { display: flex; align-items: center; gap: 1.1rem; margin-left: auto; }
+.p2p-nav .nav-link.active { color: var(--caramel); border-bottom: 2px solid var(--caramel); }
+.p2p-user { color: var(--text-secondary); font-size: .9rem; }
+.p2p-menu-btn { display: none; margin-left: auto; background: none; border: 1px solid var(--border-mid); color: var(--text-primary); border-radius: .5rem; padding: .45rem; width: 2.6rem; height: 2.6rem; }
+.p2p-menu-btn svg { width: 100%; height: 100%; }
+@media (max-width: 820px) {
+  .p2p-menu-btn { display: inline-flex; }
+  .p2p-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: .2rem; padding: 1rem; background: var(--surface-2); border-bottom: 1px solid var(--border-mid); }
+  .p2p-nav.open { display: flex; }
+  .site-header { position: relative; }
+}
+
+/* Simulation notice */
+.simulated-banner { background: rgba(224,169,58,.14); color: var(--warning); text-align: center; padding: .45rem 1rem; font-size: .85rem; border-bottom: 1px solid rgba(224,169,58,.3); }
+
+/* Tabs */
+.tab-row { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 1.2rem; border-bottom: 1px solid var(--border-mid); }
+.tab { background: none; border: 0; color: var(--text-secondary); padding: .7rem 1rem; cursor: pointer; border-bottom: 2px solid transparent; font: inherit; }
+.tab:hover { color: var(--text-primary); }
+.tab.active { color: var(--caramel); border-bottom-color: var(--caramel); }
+.tab:focus-visible, .clickable:focus-visible, .wallet-card:focus-visible { outline: 2px solid var(--caramel); outline-offset: 2px; }
+
+/* Layout helpers */
+.dash-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 1.5rem; }
+.dash-grid > .dash-wide { min-width: 0; }
+@media (max-width: 900px) { .dash-grid { grid-template-columns: 1fr; } }
+.quick-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1rem; }
+.inline-form { display: flex; gap: .7rem; align-items: flex-end; flex-wrap: wrap; }
+.inline-form .form-group, .inline-form input { flex: 1 1 12rem; margin-bottom: 0; }
+.send-form { max-width: 34rem; }
+.filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: .9rem; align-items: end; }
+.filters .form-group { margin-bottom: 0; }
+.filter-actions { display: flex; gap: .5rem; }
+
+/* Wallet cards */
+.wallet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1rem; }
+.wallet-card { background: var(--glass-strong); border: 1px solid var(--border-mid); border-radius: 1rem; padding: 1.2rem; cursor: pointer; }
+.wallet-card header { display: flex; justify-content: space-between; align-items: center; }
+.wallet-cur { font-family: var(--font-label); letter-spacing: .08em; font-size: 1.3rem; color: var(--caramel); }
+.wallet-label { margin: .9rem 0 0; color: var(--text-muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; }
+.wallet-balance { margin: .1rem 0 .4rem; font-size: 1.8rem; font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.wallet-sub { margin: .1rem 0; color: var(--text-secondary); font-size: .85rem; }
+.wallet-card.frozen, .wallet-card.suspended { border-color: var(--warning); }
+.wallet-card.closed { opacity: .6; border-style: dashed; }
+
+/* Tables */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.data-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+.data-table th { text-align: left; color: var(--text-muted); font-weight: 600; font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; padding: .6rem .7rem; border-bottom: 1px solid var(--border-mid); white-space: nowrap; }
+.data-table td { padding: .75rem .7rem; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+.data-table .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.data-table .actions { white-space: nowrap; }
+.data-table .actions .btn { margin: .1rem; }
+.clickable { cursor: pointer; }
+.clickable:hover td { background: var(--glass); }
+.amt-in { color: var(--success); font-weight: 600; }
+.amt-out { color: var(--text-primary); font-weight: 600; }
+code { background: var(--glass); padding: .1rem .4rem; border-radius: .3rem; font-size: .85em; word-break: break-all; }
+
+/* Key/value list, stats, pager */
+.kv { display: grid; grid-template-columns: max-content 1fr; gap: .5rem 1.2rem; margin: 1rem 0; }
+.kv dt { color: var(--text-muted); font-size: .85rem; }
+.kv dd { margin: 0; word-break: break-word; }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.stat-card { background: var(--glass-strong); border: 1px solid var(--border-mid); border-radius: 1rem; padding: 1.1rem; }
+.stat-label { margin: 0; color: var(--text-muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; }
+.stat-value { margin: .2rem 0 .6rem; font-size: 2rem; font-weight: 700; }
+.stat-list { list-style: none; margin: 0; padding: 0; font-size: .88rem; }
+.stat-list li { display: flex; justify-content: space-between; padding: .2rem 0; border-top: 1px solid var(--border-soft); }
+.pager { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
+
+/* Status badges for wallet / transaction / user states */
+.badge.active, .badge.completed { background: rgba(76,175,120,.15); color: var(--success); }
+.badge.frozen, .badge.suspended, .badge.pending, .badge.processing, .badge.pending_verification { background: rgba(224,169,58,.15); color: var(--warning); }
+.badge.closed, .badge.failed, .badge.blocked, .badge.deactivated, .badge.cancelled, .badge.reversed { background: rgba(224,92,58,.15); color: var(--danger); }
